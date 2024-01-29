@@ -2,7 +2,7 @@ import React from "react";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 
-const Album = (props) => {
+const MerchItem = (props) => {
   return (
     <Card>
       <Card.Img variant="top" src={props.imageSrc} />
@@ -15,4 +15,4 @@ const Album = (props) => {
   );
 };
 
-export default Album;
+export default MerchItem;

@@ -2,7 +2,7 @@ import { Button, Badge, Container, Nav, Navbar } from "react-bootstrap";
 
 function Header() {
   return (
-    <Navbar expand="lg" className="bg-body-tertiary" data-bs-theme="dark">
+    <Navbar expand="lg" className="bg-body-tertiary" sticky="top">
       <Container>
         <Navbar.Brand href="#home">Pink Floyd</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -12,9 +12,9 @@ function Header() {
             <Nav.Link href="#products">Products</Nav.Link>
             <Nav.Link href="#about">About</Nav.Link>
           </Nav>
-          <Button variant="info">
-            Cart{" "}
-            <Badge pill bg="secondary">
+          <Button variant="dark">
+            Cart
+            <Badge pill bg="warning" className="ms-2 text-bg-warning">
               0
             </Badge>
           </Button>
