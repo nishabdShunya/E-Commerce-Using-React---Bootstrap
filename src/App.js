@@ -1,31 +1,25 @@
-import React, { Fragment } from "react";
+import React from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Header from "./components/Layout/Header";
-import Albums from "./components/Products/Albums";
-import Merchandise from "./components/Products/Merchandise";
-import Footer from "./components/Layout/Footer";
+import RootLayout from "./components/Layout/RootLayout";
+import Products from "./components/Products/Products";
 import CartContextProvider from "./store/CartContextProvider";
 import About from "./components/About/About";
 
 const router = createBrowserRouter([
-  { path: "/", element: <About /> },
   {
-    path: "/products",
-    element: (
-      <Fragment>
-        <Albums />
-        <Merchandise />
-      </Fragment>
-    ),
+    path: "/",
+    element: <RootLayout />,
+    children: [
+      { path: "/", element: <About /> },
+      { path: "/products", element: <Products /> },
+    ],
   },
 ]);
 
 function App() {
   return (
     <CartContextProvider>
-      <Header />
       <RouterProvider router={router} />
-      <Footer />
     </CartContextProvider>
   );
 }

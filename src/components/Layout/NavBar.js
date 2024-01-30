@@ -1,4 +1,5 @@
 import React, { Fragment, useState, useContext } from "react";
+import { Link } from "react-router-dom";
 import { Button, Badge, Container, Nav, Navbar } from "react-bootstrap";
 import { FaShoppingCart } from "react-icons/fa";
 import Cart from "../Cart/Cart";
@@ -29,9 +30,15 @@ function Header() {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
-              <Nav.Link href="http://localhost:3000/">About</Nav.Link>
-              <Nav.Link href="http://localhost:3000/products">Products</Nav.Link>
-              <Nav.Link href="#tours">Tours</Nav.Link>
+              <Nav.Link as={Link} to="/">
+                About
+              </Nav.Link>
+              <Nav.Link as={Link} to="/products">
+                Products
+              </Nav.Link>
+              <Nav.Link as={Link} to="/tours">
+                Tours
+              </Nav.Link>
             </Nav>
             <Button
               variant="dark"
