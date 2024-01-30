@@ -1,13 +1,15 @@
 import React, { Fragment } from "react";
-import Header from "./components/Layout/Header/Header";
-import Products from "./components/Products/Products";
-import Footer from "./components/Layout/Footer/Footer";
+import Header from "./components/Layout/Header";
+import Albums from "./components/Products/Albums";
+import Merchandise from "./components/Products/Merchandise";
+import Footer from "./components/Layout/Footer";
 
 function App() {
   return (
     <Fragment>
       <Header />
-      <Products />
+      <Albums />
+      <Merchandise />
       <Footer />
     </Fragment>
   );

@@ -3,9 +3,9 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import MerchItem from "./MerchItem";
-import tshirt from "../../../assets/pf_tshirt.jpg";
-import coffeeMug from "../../../assets/pf_coffee_mug.png";
-import wallet from "../../../assets/pf_wallet.jpg";
+import tshirt from "../../assets/pf_tshirt.jpg";
+import coffeeMug from "../../assets/pf_coffee_mug.png";
+import wallet from "../../assets/pf_wallet.jpg";
 
 const DUMMY_MERCHANDISE = [
   {

@@ -3,12 +3,12 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Album from "./Album";
-import theDivisionBell from "../../../assets/the_division_bell.jpg";
-import theEndlessRiver from "../../../assets/the_endless_river.jpg";
-import obscuredByClouds from "../../../assets/obscured_by_clouds.jpg";
-import theDarkSideOfMoon from "../../../assets/the_dark_side_of_moon.jpg";
-import meddle from "../../../assets/meddle.jpg";
-import animals from "../../../assets/animals.jpg";
+import theDivisionBell from "../../assets/the_division_bell.jpg";
+import theEndlessRiver from "../../assets/the_endless_river.jpg";
+import obscuredByClouds from "../../assets/obscured_by_clouds.jpg";
+import theDarkSideOfMoon from "../../assets/the_dark_side_of_moon.jpg";
+import meddle from "../../assets/meddle.jpg";
+import animals from "../../assets/animals.jpg";
 
 const DUMMY_ALBUMS = [
   {
