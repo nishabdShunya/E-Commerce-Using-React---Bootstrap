@@ -38,6 +38,7 @@ const Albums = () => {
             return (
               <Col key={merch.id}>
                 <MerchItem
+                  id={merch.id}
                   title={merch.title}
                   price={merch.price}
                   imageSrc={merch.imageSrc}

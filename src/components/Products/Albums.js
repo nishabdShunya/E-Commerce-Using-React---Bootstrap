@@ -59,6 +59,7 @@ const Albums = () => {
             return (
               <Col key={album.id}>
                 <Album
+                  id={album.id}
                   title={album.title}
                   price={album.price}
                   imageSrc={album.imageSrc}

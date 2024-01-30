@@ -1,9 +1,16 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState, useContext } from "react";
 import { Button, Badge, Container, Nav, Navbar } from "react-bootstrap";
+import { FaShoppingCart } from "react-icons/fa";
 import Cart from "../Cart/Cart";
+import CartContext from "../../store/cart-context";
 
 function Header() {
+  const cartCtx = useContext(CartContext);
   const [open, setOpen] = useState(false);
+
+  const totalQuantity = cartCtx.items.reduce((total, item) => {
+    return total + item.quantity;
+  }, 0);
 
   const openCartHandler = () => {
     setOpen(true);
@@ -26,10 +33,15 @@ function Header() {
               <Nav.Link href="#products">Products</Nav.Link>
               <Nav.Link href="#about">Tours</Nav.Link>
             </Nav>
-            <Button variant="dark" onClick={openCartHandler}>
-              Cart
-              <Badge pill bg="warning" className="ms-2 text-bg-warning">
-                0
+            <Button
+              variant="dark"
+              onClick={openCartHandler}
+              className="d-flex align-items-center"
+            >
+              <FaShoppingCart />
+              <span className="mx-2">Cart</span>
+              <Badge pill bg="warning" className="text-bg-warning">
+                {totalQuantity}
               </Badge>
             </Button>
           </Navbar.Collapse>
