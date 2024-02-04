@@ -28,7 +28,7 @@ const DUMMY_MERCHANDISE = [
   },
 ];
 
-const Albums = () => {
+const Merchandise = () => {
   return (
     <div className="m-5">
       <h2 className="text-center">MERCHANDISE</h2>
@@ -52,4 +52,4 @@ const Albums = () => {
   );
 };
 
-export default Albums;
+export default Merchandise;

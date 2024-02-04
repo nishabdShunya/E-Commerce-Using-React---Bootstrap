@@ -39,6 +39,9 @@ function Header() {
               <Nav.Link as={Link} to="/tours">
                 Tours
               </Nav.Link>
+              <Nav.Link as={Link} to="/contact">
+                Contact
+              </Nav.Link>
             </Nav>
             <Button
               variant="dark"

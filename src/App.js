@@ -5,6 +5,7 @@ import Products from "./components/Products/Products";
 import CartContextProvider from "./store/CartContextProvider";
 import About from "./components/About/About";
 import Tours from "./components/Tours/Tours";
+import Contact from "./components/Contact/Contact";
 
 const router = createBrowserRouter([
   {
@@ -14,6 +15,7 @@ const router = createBrowserRouter([
       { path: "/", element: <About /> },
       { path: "/products", element: <Products /> },
       { path: "/tours", element: <Tours /> },
+      { path: "/contact", element: <Contact /> },
     ],
   },
 ]);
