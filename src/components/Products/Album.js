@@ -16,7 +16,12 @@ const Album = (props) => {
       <Card.Img variant="top" src={props.imageSrc} />
       <Card.Body>
         <Card.Title>
-          <Link to={`/products/${props.id}`}>{props.title}</Link>
+          <Link
+            to={`/products/${props.id}`}
+            className="text-decoration-none text-dark"
+          >
+            {props.title}
+          </Link>
         </Card.Title>
         <Card.Text>${props.price}</Card.Text>
         <Button variant="warning" onClick={addToCartHandler}>

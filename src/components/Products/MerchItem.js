@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import { Link } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import CartContext from "../../store/cart-context";
@@ -14,7 +15,14 @@ const MerchItem = (props) => {
     <Card>
       <Card.Img variant="top" src={props.imageSrc} />
       <Card.Body>
-        <Card.Title>{props.title}</Card.Title>
+        <Card.Title>
+          <Link
+            to={`/products/${props.id}`}
+            className="text-decoration-none text-dark"
+          >
+            {props.title}
+          </Link>
+        </Card.Title>
         <Card.Text>${props.price}</Card.Text>
         <Button variant="warning" onClick={addToCartHandler}>
           ADD TO CART
