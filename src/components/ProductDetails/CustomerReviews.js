@@ -14,7 +14,7 @@ const CustomerReviews = () => {
             className="border border-dark-subtle my-1 py-3 rounded"
           >
             <Col md={1}>
-              <IoPersonCircle size="3em" />
+              <img src={r.photo} alt={r.name} height="75" className="rounded" />
             </Col>
             <Col md={11}>
               <div className="fw-semibold">{r.name}</div>
