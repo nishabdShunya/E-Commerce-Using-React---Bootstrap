@@ -7,7 +7,7 @@ const CustomerReviews = () => {
   return (
     <Fragment>
       <div className="d-flex justify-content-between align-items-center">
-        <h4>Customer Reviews</h4>
+        <h4 className="m-0">Customer Reviews</h4>
         <Link
           to=".."
           relative="path"

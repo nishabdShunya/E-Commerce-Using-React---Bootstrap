@@ -27,7 +27,12 @@ const ProductDetails = () => {
       <Row className="pt-3">
         <Col>
           {location.pathname === `/products/${product.id}` && (
-            <Link to={`/products/${product.id}/reviews`}>See Reviews</Link>
+            <Link
+              to={`/products/${product.id}/reviews`}
+              className="text-decoration-none bg-dark text-light p-2 rounded"
+            >
+              See Customer Reviews
+            </Link>
           )}
           <Outlet />
         </Col>
