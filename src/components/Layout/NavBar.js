@@ -1,5 +1,5 @@
 import React, { Fragment, useState, useContext } from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { Button, Badge, Container, Nav, Navbar } from "react-bootstrap";
 import { FaShoppingCart } from "react-icons/fa";
 import Cart from "../Cart/Cart";
@@ -30,18 +30,46 @@ function Header() {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
-              <Nav.Link as={Link} to="/about">
+              <NavLink
+                to="/about"
+                className={({ isActive }) => {
+                  return isActive
+                    ? "mx-2 text-dark"
+                    : "mx-2 text-dark text-decoration-none";
+                }}
+              >
                 About
-              </Nav.Link>
-              <Nav.Link as={Link} to="/products">
+              </NavLink>
+              <NavLink
+                to="/products"
+                className={({ isActive }) => {
+                  return isActive
+                    ? "mx-2 text-dark"
+                    : "mx-2 text-dark text-decoration-none";
+                }}
+              >
                 Products
-              </Nav.Link>
-              <Nav.Link as={Link} to="/tours">
+              </NavLink>
+              <NavLink
+                to="/tours"
+                className={({ isActive }) => {
+                  return isActive
+                    ? "mx-2 text-dark"
+                    : "mx-2 text-dark text-decoration-none";
+                }}
+              >
                 Tours
-              </Nav.Link>
-              <Nav.Link as={Link} to="/contact">
+              </NavLink>
+              <NavLink
+                to="/contact"
+                className={({ isActive }) => {
+                  return isActive
+                    ? "mx-2 text-dark"
+                    : "mx-2 text-dark text-decoration-none";
+                }}
+              >
                 Contact
-              </Nav.Link>
+              </NavLink>
             </Nav>
             <Button
               variant="dark"
