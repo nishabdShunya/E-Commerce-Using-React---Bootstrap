@@ -1,32 +1,19 @@
-import React from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
-import RootLayout from "./components/Layout/RootLayout";
-import Products from "./pages/Products";
-import About from "./pages/About";
-import Tours from "./pages/Tours";
-import Contact from "./pages/Contact";
-import NotFound from "./pages/NotFound";
-import ProductDetails from "./pages/ProductDetails";
-import CustomerReviews from "./components/ProductDetails/CustomerReviews";
-import CartContextProvider from "./store/CartContextProvider";
+import { Routes, Route } from "react-router-dom";
+
+import Layout from "./components/Layout/Layout";
+import UserProfile from "./components/Profile/UserProfile";
+import AuthPage from "./pages/AuthPage";
+import HomePage from "./pages/HomePage";
 
 function App() {
   return (
-    <CartContextProvider>
-      <Routes>
-        <Route path="/" element={<RootLayout />}>
-          <Route path="/" element={<Navigate to="/about" />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/products" element={<Products />} />
-          <Route path="/products/:productId" element={<ProductDetails />}>
-            <Route path="reviews" element={<CustomerReviews />} />
-          </Route>
-          <Route path="/tours" element={<Tours />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="*" element={<NotFound />} />
-        </Route>
-      </Routes>
-    </CartContextProvider>
+    <Routes>
+      <Route path="/" element={<Layout />}>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/auth" element={<AuthPage />} />
+        <Route path="/profile" element={<UserProfile />} />
+      </Route>
+    </Routes>
   );
 }
 
