@@ -1,12 +1,17 @@
 import React, { Fragment, useState, useContext } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { Button, Badge, Container, Nav, Navbar } from "react-bootstrap";
 import { FaShoppingCart } from "react-icons/fa";
 import Cart from "../Cart/Cart";
 import CartContext from "../../store/cart-context";
+import AuthContext from "../../store/auth-context";
 
 function Header() {
+  const authCtx = useContext(AuthContext);
   const cartCtx = useContext(CartContext);
+
+  const navigate = useNavigate();
+
   const [open, setOpen] = useState(false);
 
   const totalQuantity = cartCtx.items.reduce((total, item) => {
@@ -19,6 +24,15 @@ function Header() {
 
   const closeCartHandler = () => {
     setOpen(false);
+  };
+
+  const loginHandler = () => {
+    navigate("/auth");
+  };
+
+  const logoutHandler = () => {
+    authCtx.logout();
+    navigate("/auth");
   };
 
   return (
@@ -82,6 +96,16 @@ function Header() {
                 {totalQuantity}
               </Badge>
             </Button>
+            {authCtx.isLoggedIn && (
+              <Button variant="outline-dark" onClick={logoutHandler}>
+                Logout
+              </Button>
+            )}
+            {!authCtx.isLoggedIn && (
+              <Button variant="outline-dark" onClick={loginHandler}>
+                Login
+              </Button>
+            )}
           </Navbar.Collapse>
         </Container>
       </Navbar>
