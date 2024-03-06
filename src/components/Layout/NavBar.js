@@ -88,7 +88,7 @@ function Header() {
             <Button
               variant="dark"
               onClick={openCartHandler}
-              className="d-flex align-items-center"
+              className="d-flex align-items-center me-3"
             >
               <FaShoppingCart />
               <span className="mx-2">Cart</span>
@@ -96,16 +96,12 @@ function Header() {
                 {totalQuantity}
               </Badge>
             </Button>
-            {authCtx.isLoggedIn && (
-              <Button variant="outline-dark" onClick={logoutHandler}>
-                Logout
-              </Button>
-            )}
-            {!authCtx.isLoggedIn && (
-              <Button variant="outline-dark" onClick={loginHandler}>
-                Login
-              </Button>
-            )}
+            <Button
+              variant={authCtx.isLoggedIn ? "danger" : "primary"}
+              onClick={authCtx.isLoggedIn ? logoutHandler : loginHandler}
+            >
+              {authCtx.isLoggedIn ? "Logout" : "Login"}
+            </Button>
           </Navbar.Collapse>
         </Container>
       </Navbar>

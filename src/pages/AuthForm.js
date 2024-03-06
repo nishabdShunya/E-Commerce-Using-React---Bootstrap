@@ -45,7 +45,7 @@ function AuthForm() {
       }
       const data = await response.json();
       console.log(data);
-      authCtx.login(data.idToken);
+      authCtx.login(data.idToken, data.email);
       navigate("/products");
     } catch (error) {
       alert(error.message);

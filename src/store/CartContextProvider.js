@@ -1,27 +1,53 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import CartContext from "./cart-context";
+import AuthContext from "./auth-context";
 
 const CartContextProvider = (props) => {
+  const authCtx = useContext(AuthContext);
+  console.log(authCtx);
+
   const [items, setItems] = useState([]);
 
-  const addItemToCart = (item) => {
-    setItems((prevItems) => {
-      const existingItemIndex = prevItems.findIndex(
-        (prevItem) => prevItem.id === item.id
+  const addItemToCart = async (item) => {
+    const modifiedUserEmail = authCtx.email.replace("@", "").replace(".", "");
+
+    try {
+      const getResponse = await fetch(
+        `https://e-commerce-auth-c71be-default-rtdb.firebaseio.com/cart${modifiedUserEmail}.json`
       );
-      if (existingItemIndex !== -1) {
-        const existingItem = prevItems[existingItemIndex];
-        const updatedItem = {
-          ...existingItem,
-          quantity: existingItem.quantity + item.quantity,
-        };
-        const updatedItems = [...prevItems];
-        updatedItems[existingItemIndex] = updatedItem;
-        return updatedItems;
-      } else {
-        return [...prevItems, item];
+      if (!getResponse.ok) {
+        throw new Error("Something went wrong");
       }
-    });
+      const getResponseData = await getResponse.json();
+
+      let reqConfig = { payload: item, method: "POST", keyPath: "" };
+      for (let key in getResponseData) {
+        if (getResponseData[key].id === item.id) {
+          reqConfig.payload = {
+            ...getResponseData[key],
+            quantity: getResponseData[key].quantity + item.quantity,
+          };
+          reqConfig.method = "PUT";
+          reqConfig.keyPath = `/${key}`;
+        }
+      }
+
+      const response = await fetch(
+        `https://e-commerce-auth-c71be-default-rtdb.firebaseio.com/cart${modifiedUserEmail}${reqConfig.keyPath}.json`,
+        {
+          method: reqConfig.method,
+          body: JSON.stringify(reqConfig.payload),
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+      if (!response.ok) {
+        throw new Error("Something went wrong");
+      }
+      const responseData = await response.json();
+      console.log(responseData);
+    } catch (error) {
+      alert(error.message);
+    }
   };
 
   const removeItemFromCart = (id) => {
