@@ -1,31 +1,82 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import CartContext from "./cart-context";
 import AuthContext from "./auth-context";
 
+const fetchCartData = async (modifiedUserEmail) => {
+  const response = await fetch(
+    `https://e-commerce-auth-c71be-default-rtdb.firebaseio.com/cart${modifiedUserEmail}.json`
+  );
+
+  if (!response.ok) {
+    throw new Error("Something went wrong");
+  }
+
+  const responseData = await response.json();
+  return responseData;
+};
+
 const CartContextProvider = (props) => {
   const authCtx = useContext(AuthContext);
-  console.log(authCtx);
 
   const [items, setItems] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        if (!authCtx.email) {
+          return setItems([]);
+        }
+        const modifiedUserEmail = authCtx.email
+          .replace("@", "")
+          .replace(".", "");
+
+        const userCartData = await fetchCartData(modifiedUserEmail);
+
+        let cartItems = [];
+        for (let key in userCartData) {
+          cartItems.push(userCartData[key]);
+        }
+        setItems(cartItems);
+      } catch (error) {
+        alert(error.message);
+      }
+    };
+    fetchData();
+  }, [authCtx.email]);
+
+  const updateCartItems = (userCartData, item) => {
+    let cartItems = [];
+    for (let key in userCartData) {
+      cartItems.push(userCartData[key]);
+    }
+    const existingItemIndex = cartItems.findIndex((i) => i.id === item.id);
+    if (existingItemIndex !== -1) {
+      const existingItem = cartItems[existingItemIndex];
+      const updatedItem = {
+        ...existingItem,
+        quantity: existingItem.quantity + item.quantity,
+      };
+      cartItems[existingItemIndex] = updatedItem;
+    } else {
+      cartItems.push(item);
+    }
+    setItems(cartItems);
+  };
 
   const addItemToCart = async (item) => {
     const modifiedUserEmail = authCtx.email.replace("@", "").replace(".", "");
 
     try {
-      const getResponse = await fetch(
-        `https://e-commerce-auth-c71be-default-rtdb.firebaseio.com/cart${modifiedUserEmail}.json`
-      );
-      if (!getResponse.ok) {
-        throw new Error("Something went wrong");
-      }
-      const getResponseData = await getResponse.json();
+      const userCartData = await fetchCartData(modifiedUserEmail);
+
+      updateCartItems(userCartData, item);
 
       let reqConfig = { payload: item, method: "POST", keyPath: "" };
-      for (let key in getResponseData) {
-        if (getResponseData[key].id === item.id) {
+      for (let key in userCartData) {
+        if (userCartData[key].id === item.id) {
           reqConfig.payload = {
-            ...getResponseData[key],
-            quantity: getResponseData[key].quantity + item.quantity,
+            ...userCartData[key],
+            quantity: userCartData[key].quantity + item.quantity,
           };
           reqConfig.method = "PUT";
           reqConfig.keyPath = `/${key}`;
