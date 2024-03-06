@@ -69,8 +69,6 @@ const CartContextProvider = (props) => {
     try {
       const userCartData = await fetchCartData(modifiedUserEmail);
 
-      updateCartItems(userCartData, item);
-
       let reqConfig = { payload: item, method: "POST", keyPath: "" };
       for (let key in userCartData) {
         if (userCartData[key].id === item.id) {
@@ -94,15 +92,42 @@ const CartContextProvider = (props) => {
       if (!response.ok) {
         throw new Error("Something went wrong");
       }
-      const responseData = await response.json();
-      console.log(responseData);
+
+      updateCartItems(userCartData, item);
     } catch (error) {
       alert(error.message);
     }
   };
 
-  const removeItemFromCart = (id) => {
-    setItems((prevItems) => prevItems.filter((prevItem) => prevItem.id !== id));
+  const removeItemFromCart = async (id) => {
+    const modifiedUserEmail = authCtx.email.replace("@", "").replace(".", "");
+    try {
+      const userCartData = await fetchCartData(modifiedUserEmail);
+
+      let keyPath;
+      for (let key in userCartData) {
+        if (userCartData[key].id === id) {
+          keyPath = `/${key}`;
+        }
+      }
+
+      const response = await fetch(
+        `https://e-commerce-auth-c71be-default-rtdb.firebaseio.com/cart${modifiedUserEmail}${keyPath}.json`,
+        {
+          method: "DELETE",
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+      if (!response.ok) {
+        throw new Error("Something went wrong");
+      }
+
+      setItems((prevItems) =>
+        prevItems.filter((prevItem) => prevItem.id !== id)
+      );
+    } catch (error) {
+      alert(error.message);
+    }
   };
 
   const cartContextObject = {
