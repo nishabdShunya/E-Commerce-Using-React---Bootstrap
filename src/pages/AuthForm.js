@@ -23,10 +23,10 @@ function AuthForm() {
     let url;
     if (isLogin) {
       url =
-        "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCs9omEvExESoqmsvnNl2m3gS2KhTr4D8U";
+        "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBpKGbcXRhUz7tVp_2ApTJ8kGraDg_omE4";
     } else {
       url =
-        "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCs9omEvExESoqmsvnNl2m3gS2KhTr4D8U";
+        "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBpKGbcXRhUz7tVp_2ApTJ8kGraDg_omE4";
     }
 
     try {

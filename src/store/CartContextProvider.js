@@ -2,15 +2,14 @@ import React, { useState, useContext, useEffect } from "react";
 import CartContext from "./cart-context";
 import AuthContext from "./auth-context";
 
-const fetchCartData = async (modifiedUserEmail) => {
-  const response = await fetch(
-    `https://e-commerce-auth-c71be-default-rtdb.firebaseio.com/cart${modifiedUserEmail}.json`
-  );
+const baseCartUrl =
+  "https://e-commerce-app-dd87e-default-rtdb.firebaseio.com/cart";
 
+const fetchCartData = async (modifiedUserEmail) => {
+  const response = await fetch(`${baseCartUrl}${modifiedUserEmail}.json`);
   if (!response.ok) {
     throw new Error("Something went wrong");
   }
-
   const responseData = await response.json();
   return responseData;
 };
@@ -21,34 +20,23 @@ const CartContextProvider = (props) => {
   const [items, setItems] = useState([]);
 
   useEffect(() => {
-    const fetchData = async () => {
+    (async () => {
       try {
         if (!authCtx.email) {
           return setItems([]);
         }
-        const modifiedUserEmail = authCtx.email
-          .replace("@", "")
-          .replace(".", "");
-
-        const userCartData = await fetchCartData(modifiedUserEmail);
-
-        let cartItems = [];
-        for (let key in userCartData) {
-          cartItems.push(userCartData[key]);
-        }
+        const modifiedEmail = authCtx.email.replace("@", "").replace(".", "");
+        const userCartData = await fetchCartData(modifiedEmail);
+        let cartItems = Object.values(userCartData);
         setItems(cartItems);
       } catch (error) {
         alert(error.message);
       }
-    };
-    fetchData();
+    })();
   }, [authCtx.email]);
 
   const updateCartItems = (userCartData, item) => {
-    let cartItems = [];
-    for (let key in userCartData) {
-      cartItems.push(userCartData[key]);
-    }
+    let cartItems = Object.values(userCartData);
     const existingItemIndex = cartItems.findIndex((i) => i.id === item.id);
     if (existingItemIndex !== -1) {
       const existingItem = cartItems[existingItemIndex];
@@ -64,9 +52,8 @@ const CartContextProvider = (props) => {
   };
 
   const addItemToCart = async (item) => {
-    const modifiedUserEmail = authCtx.email.replace("@", "").replace(".", "");
-
     try {
+      const modifiedUserEmail = authCtx.email.replace("@", "").replace(".", "");
       const userCartData = await fetchCartData(modifiedUserEmail);
 
       let reqConfig = { payload: item, method: "POST", keyPath: "" };
@@ -82,7 +69,7 @@ const CartContextProvider = (props) => {
       }
 
       const response = await fetch(
-        `https://e-commerce-auth-c71be-default-rtdb.firebaseio.com/cart${modifiedUserEmail}${reqConfig.keyPath}.json`,
+        `${baseCartUrl}${modifiedUserEmail}${reqConfig.keyPath}.json`,
         {
           method: reqConfig.method,
           body: JSON.stringify(reqConfig.payload),
@@ -100,8 +87,8 @@ const CartContextProvider = (props) => {
   };
 
   const removeItemFromCart = async (id) => {
-    const modifiedUserEmail = authCtx.email.replace("@", "").replace(".", "");
     try {
+      const modifiedUserEmail = authCtx.email.replace("@", "").replace(".", "");
       const userCartData = await fetchCartData(modifiedUserEmail);
 
       let keyPath;
@@ -112,7 +99,7 @@ const CartContextProvider = (props) => {
       }
 
       const response = await fetch(
-        `https://e-commerce-auth-c71be-default-rtdb.firebaseio.com/cart${modifiedUserEmail}${keyPath}.json`,
+        `${baseCartUrl}${modifiedUserEmail}${keyPath}.json`,
         {
           method: "DELETE",
           headers: { "Content-Type": "application/json" },
